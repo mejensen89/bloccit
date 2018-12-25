@@ -1,6 +1,8 @@
 const request = require("request");
 const server = require("../../src/server");
 const base = "http://localhost:3000/";
+const marco = "http://localhost:3000/marco";
+const about = "http://localhost:3000/about";
 
 describe("routes : static", () => {
   describe("GET /", () => {
@@ -25,4 +27,11 @@ describe("routes : static", () => {
   		});
   	});
   });
+  describe("GET about", ()=> {
+  	it ('should return a string containing "About Us" in the view', (done)=>{
+  		request.get(about, (err, res, body) =>{
+  			expect(body).toContain("About Us")
+  		})
+  	})
+  })
 });

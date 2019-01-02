@@ -4,34 +4,35 @@ const base = "http://localhost:3000/";
 const marco = "http://localhost:3000/marco";
 const about = "http://localhost:3000/about";
 
-describe("routes : static", () => {
-  describe("GET /", () => {
-    it("should return status code 200 and have 'Welcome to Bloccit' in the body of the response", () => {
-   request.get(base, (err, res, body) => {
-     expect(res.statusCode).toBe(200);
-     expect(body).toContain("Welcome to Bloccit");
+describe('routes : static', () => {
+
+  describe('GET /', () => {
+    it('should return status code 200 and have "Welcome to Bloccit" in the body of the response', (done) => {
       request.get(base, (err, res, body) => {
-        expect(res.statusCode).toBe(200);
+        expect(body).toContain('Welcome to Bloccit');
         done();
       });
     });
+  });
 
-  });
-  describe("GET /marco", ()=> {
-  	const url = base + "marco";
-  	it("should return body containing string \"polo\"", ( done )=> {
-  		request.get(url, (err, res, body)=>{
-  			expect (res.statusCode).toBe( 200 );
-  			expect(body.toLowerCase()).toContain( "polo" );
-  			done();
-  		});
-  	});
-  });
-  describe("GET about", ()=> {
-  	it ('should return a string containing "About Us" in the view', (done)=>{
-  		request.get(about, (err, res, body) =>{
-  			expect(body).toContain("About Us")
-  		})
-  	})
+  describe('GET /marco', () => {
+    it('should return status code 200 and "POLO!" as the body', (done) => {
+      request.get('http://localhost:3000/marco', (err, res, body) => {
+        expect(res.statusCode).toBe(200);
+        expect(body).toBe('POLO!');
+        done();
+      });
+    });
   })
+
+  describe('GET /about', () => {
+    it('should return status code 200 and have "About Us" in the body', (done) => {
+      request.get('http://localhost:3000/about', (err,res,body) => {
+        expect(res.statusCode).toBe(200);
+      expect(body).toContain('About Us');
+        done();
+      });
+    });
+  });
+
 });

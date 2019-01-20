@@ -3,30 +3,30 @@ const flairQueries = require('../db/queries.flairs.js');
 module.exports = {
 
 	new(req, res, next) {
-		res.render('flair/new', {topicId: req.params.topicId, postId: req.params.postId});
+		res.render('flairs/new', { topicId: req.params.topicId, postId: req.params.postId });
 	},
 
-	create(req, res, next){
+	create(req, res, next) {
 		let newFlair = {
 			name: req.body.name,
 			color: req.body.color,
 			topicId: req.params.topicId,
 			postId: req.params.postId,
 		};
-		flairQueries.addFlair(newFlair, (err, flair)=>{
+		flairQueries.addFlair(newFlair, (err, flair) => {
 			if (err) {
 				console.log(err)
-				res.redirect(500, "flairs/new");
+				res.redirect(500, 'flairs/new');
 			} else {
-				res.redirect(303, `/topics/${newFlair.postId}/flairs/${flair.id}`);
+				res.redirect(303, `/topics/${newFlair.topicId}/posts/${newFlair.postId}/flairs/${flair.id}`);
 			}
 		});
 	},
 
 	show(req, res, next) {
-		flairQueries.getFlair(req.params.id, (err, flair)=>{
-			if (err || flair == null) {
-				res.redirect(404, '/')
+		flairQueries.getFlair(req.params.id, (err, flair) => {
+			if (err || flair == null)  {
+				res.redirect(404,'/')
 			} else {
 				res.render('flairs/show', {flair});
 			}
@@ -34,16 +34,16 @@ module.exports = {
 	},
 
 	destroy(req, res, next) {
-		flairQueries.deleteFlair(req.params.id, (err, deletedFlair) =>{
-			if (err){
+		flairQueries.deleteFlair(req.params.id, (err, deletedRecordsCount) => {
+			if (err) {
 				res.redirect(500, `/topics/${req.params.topicId}/posts/${req.params.postId}/flairs/${req.params.id}`);
 			} else {
-				res.redirect(303, `/topics/${req.params.topicId}/posts/${req.params.id}`);
+				res.redirect(303, `/topics/${req.params.topicId}/posts/${req.params.postId}`);
 			}
 		});
-	}, 
+	},
 
-	edit( req, res, next) {
+	edit(req, res, next) {
 		flairQueries.getFlair(req.params.id, (err, flair) => {
 			if (err || flair == null) {
 				res.redirect(404, '/');
@@ -52,14 +52,14 @@ module.exports = {
 			}
 		});
 	},
-
-	update (req, res, next) {
-		flairQueries.updateFlair(req.params.id, req.body, (err, flair)=>{
-			if(err || flair == null){
-				res.redirect(404, `/topics/${req.params.topicId}/posts/${req.params.postId}/flair/${req.params.id}/edit`)
+	
+	update(req, res, next) {
+		flairQueries.updateFlair(req.params.id, req.body, (err, flair) => {
+			if (err || flair == null) {
+				res.redirect(404, `/topics/${req.params.topicId}/posts/${req.params.postId}/flairs/${req.params.id}/edit`);
 			} else {
 				res.redirect(`/topics/${req.params.topicId}/posts/${req.params.postId}/flairs/${req.params.id}`);
 			}
 		});
 	},
-}
+};

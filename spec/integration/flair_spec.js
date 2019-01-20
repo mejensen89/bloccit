@@ -24,7 +24,7 @@ describe("routes: flair", ()=> {
 
 				Post.create({
 					title: 'YellowStone VS that volcano in hawaii',
-					body: 'YellowStone is dormant with potential, but Hawaii is active with flair'
+					body: 'YellowStone is dormant with potential, but Hawaii is active with flair',
 					topicId: this.topic.id,
 				})
 				.then((post)=>{

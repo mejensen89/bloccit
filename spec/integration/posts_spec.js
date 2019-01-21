@@ -67,10 +67,10 @@ describe("routes : posts", () => {
 
           Post.findOne({where: {title: "Watching snow melt"}})
           .then((post) => {
-            expect(Post).not.toBeNull();
-            expect(Post.title).toBe("Watching snow melt");
-            expect(Post.body).toBe("Without a doubt my favoriting things to do besides watching paint dry!");
-            expect(Post.topicId).not.toBeNull();
+            expect(post).not.toBeNull();
+            expect(post.title).toBe("Watching snow melt");
+            expect(post.body).toBe("Without a doubt my favoriting things to do besides watching paint dry!");
+            expect(post.topicId).not.toBeNull();
             done();
           })
           .catch((err) => {
@@ -169,7 +169,8 @@ describe("routes : posts", () => {
          const options = {
            url: `${base}/${this.topic.id}/posts/${this.post.id}/update`,
            form: {
-             title: "Snowman Building Competition"
+             title: "Snowman Building Competition", 
+             body: "It's all about who has the biggest balls... snowballs"
            }
          };
          request.post(options,

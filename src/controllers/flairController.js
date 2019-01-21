@@ -1,11 +1,9 @@
 const flairQueries = require('../db/queries.flairs.js');
 
 module.exports = {
-
 	new(req, res, next) {
 		res.render('flairs/new', { topicId: req.params.topicId, postId: req.params.postId });
 	},
-
 	create(req, res, next) {
 		let newFlair = {
 			name: req.body.name,
@@ -22,7 +20,6 @@ module.exports = {
 			}
 		});
 	},
-
 	show(req, res, next) {
 		flairQueries.getFlair(req.params.id, (err, flair) => {
 			if (err || flair == null)  {
@@ -32,17 +29,15 @@ module.exports = {
 			}
 		});
 	},
-
 	destroy(req, res, next) {
 		flairQueries.deleteFlair(req.params.id, (err, deletedRecordsCount) => {
 			if (err) {
 				res.redirect(500, `/topics/${req.params.topicId}/posts/${req.params.postId}/flairs/${req.params.id}`);
 			} else {
-				res.redirect(302, `/topics/${req.params.topicId}/posts/${req.params.postId}`);
+				res.redirect(303, `/topics/${req.params.topicId}/posts/${req.params.postId}`);
 			}
 		});
 	},
-
 	edit(req, res, next) {
 		flairQueries.getFlair(req.params.id, (err, flair) => {
 			if (err || flair == null) {
@@ -52,7 +47,6 @@ module.exports = {
 			}
 		});
 	},
-
 	update(req, res, next) {
 		flairQueries.updateFlair(req.params.id, req.body, (err, flair) => {
 			if (err || flair == null) {

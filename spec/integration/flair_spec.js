@@ -47,7 +47,7 @@ describe('routes : flairs', () => {
 
 	describe('GET /posts/:postId/flair/new', () => {
 		it('should render a new flair form', done => {
-			request.get(`${base}/${this.topic.id}/posts/${this.post.id}/flairs/new`, (err, res, body) => {
+			request.get(`${base}/${Topic.id}/posts/${Post.id}/flairs/new`, (err, res, body) => {
 				expect(err).toBeNull();
 				expect(body).toContain('New Flair');
 				done();
@@ -67,11 +67,11 @@ describe('routes : flairs', () => {
 			request.post(options, (err, res, body) => {
 				Flair.findOne({ where: { name: 'New Flair' } })
 					.then(flair => {
-						expect(flair).not.toBeNull();
-						expect(flair.name).toContain('New Flair');
-						expect(flair.color).toContain('teal');
-						expect(flair.postId).not.toBeNull();
-						expect(flair.topicId).not.toBeNull();
+						expect(this.flair).not.toBeNull();
+						expect(this.flair.name).toContain('New Flair');
+						expect(this.flair.color).toContain('teal');
+						expect(this.flair.postId).not.toBeNull();
+						expect(this.flair.topicId).not.toBeNull();
 						done();
 					})
 					.catch(err => {

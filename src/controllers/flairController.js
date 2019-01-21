@@ -38,7 +38,7 @@ module.exports = {
 			if (err) {
 				res.redirect(500, `/topics/${req.params.topicId}/posts/${req.params.postId}/flairs/${req.params.id}`);
 			} else {
-				res.redirect(303, `/topics/${req.params.topicId}/posts/${req.params.postId}`);
+				res.redirect(302, `/topics/${req.params.topicId}/posts/${req.params.postId}`);
 			}
 		});
 	},
@@ -52,7 +52,7 @@ module.exports = {
 			}
 		});
 	},
-	
+
 	update(req, res, next) {
 		flairQueries.updateFlair(req.params.id, req.body, (err, flair) => {
 			if (err || flair == null) {

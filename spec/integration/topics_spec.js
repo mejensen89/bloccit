@@ -5,12 +5,13 @@ const sequelize= require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
 
 describe("routes : topics", () =>{
+
     beforeEach((done) =>{
         this.topic;
         sequelize.sync({force: true}).then((res)=>{
             Topic.create({
                 title:"JS Frameworks",
-                description:"There is a lot of them"
+                description:"There is a lot of them!!!!"
             })
             .then((topic)=>{
                 this.topic=topic;
@@ -22,6 +23,7 @@ describe("routes : topics", () =>{
             });
         });
     });
+
     describe("GET /topics", ()=>{
         it("should return a status code 200 and all topics", (done) =>{
             request.get(base,(err,res,body)=>{
@@ -49,21 +51,16 @@ describe("routes : topics", () =>{
     });
 
     describe("POST /topics/create", () => {
-      const options = {
-        url: `${base}create`,
-        form: {
-          title: "blink-182 songs",
-          description: "What's your favorite blink-182 song?"
-        }
-      };
+        const options = {
+          url: `${base}create`,
+          form: {
+            title: "blink-182 songs",
+            description: "What's your favorite blink-182 song?"
+          }
+        };
 
-      it("should create a new topic and redirect", (done) => {
-
-
-        request.post(options,
-
-
-          (err, res, body) => {
+        it("should create a new topic and redirect", (done) => {
+          request.post(options, (err, res, body) => {
             Topic.findOne({where: {title: "blink-182 songs"}})
             .then((topic) => {
               expect(res.statusCode).toBe(303);
@@ -75,10 +72,31 @@ describe("routes : topics", () =>{
               console.log(err);
               done();
             });
-          }
-        );
+          });
+        });
+
+        it("should not create a topic that fails validations", (done) => {
+          const newOptions = {
+            url: `${base}create`,
+            form: {
+              title: "a",
+              description: "b"
+            }
+          };
+          request.post(newOptions, (err, res, body) => {
+            Topic.findOne({where: {title: "a"}})
+            .then((topic) => {
+              expect(topic).toBeNull();
+              done();
+            })
+            .catch((err) => {
+              console.log(err);
+              done();
+            });
+          });
+        });
       });
-    });
+
 
     describe("GET /topics/:id", ()=>{
 

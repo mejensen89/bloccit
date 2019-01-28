@@ -16,6 +16,15 @@ const User = require('../../src/db/models').User;
 		this.user;
 
  		sequelize.sync({ force: true }).then(res => {
+			
+ 			User.create({
+         		email: "starman@tesla.com",
+         		password: "Trekkie4lyfe"
+       		})
+       		.then((user) => {
+         	this.user = user;
+         	});
+         	
 			Topic.create({
 				title: 'The Ocean',
 				description: 'How can we enjoy it?',

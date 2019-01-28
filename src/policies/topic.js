@@ -1,13 +1,13 @@
 const ApplicationPolicy = require("./application");
 
-moduel.exports = class TopicPolicy extends ApplicationPolicy {
+module.exports = class TopicPolicy extends ApplicationPolicy {
 
 	new(){
-		reutrn this._isAdmin();
+		return this._isAdmin();
 	}
 
 	create(){
-		reutrn this.new();
+		return this.new();
 	}
 
 	edit(){

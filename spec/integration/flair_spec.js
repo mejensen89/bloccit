@@ -6,12 +6,14 @@ const sequelize = require('../../src/db/models').sequelize;
 const Topic = require('../../src/db/models').Topic;
 const Post = require('../../src/db/models').Post;
 const Flair = require('../../src/db/models').Flair;
+const User = require('../../src/db/models').User;
 
  describe('routes : flairs', () => {
 	beforeEach(done => {
 		this.topic;
 		this.post;
 		this.flair;
+		this.user;
 
  		sequelize.sync({ force: true }).then(res => {
 			Topic.create({
@@ -24,6 +26,7 @@ const Flair = require('../../src/db/models').Flair;
 					title: 'Scuba diving',
 					body: 'Great exercise!',
 					topicId: this.topic.id,
+					userId: this.user.id,
 				}).then(post => {
 					this.post = post;
 

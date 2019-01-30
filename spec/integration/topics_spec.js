@@ -8,7 +8,8 @@ const User = require("../../src/db/models").User;
 describe("routes : topics", () =>{
 
   beforeEach((done) => {   
-    this.topic;  
+    this.topic;
+
     sequelize.sync({ force: true }).then(() => {
       Topic.create({
         title: "JS Frameworks",
@@ -29,6 +30,8 @@ describe("routes : topics", () =>{
   describe("admin user performing CRUD actions for Topic", ()=>{
 
     beforeEach((done)=>{
+      this.user;
+
       User.create({
         email: "admin@example.com",
         password: "123456",
@@ -170,7 +173,8 @@ describe("routes : topics", () =>{
           url: `${base}${this.topic.id}/update`,
             form: {
               title: "JavaScript Frameworks",
-              description: "There are a lot of them"
+              description: "There are a lot of them", 
+              userId: this.user.id,
             }
         };
 
@@ -187,6 +191,7 @@ describe("routes : topics", () =>{
         });
       });
     });
+
   });
 
   describe("member user performing CRUD actions for Topic", ()=>{

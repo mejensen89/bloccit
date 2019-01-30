@@ -10,7 +10,6 @@ router.get("/marco", (req, res, next)=>{
 });
 
 //about handler
-
 router.get('/about', staticController.about);
 
 module.exports = router;

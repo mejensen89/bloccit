@@ -137,23 +137,23 @@ describe("routes : topics", () =>{
       });
     });
 
-    describe("POST /topics/:id/destroy", ()=> {
-      it("should delete the topic with the associated ID", (done)=>{
-        Topic.all()
-        .then((topics)=>{
-          const topicCountBeforeDelete = topics.length;
-          expect(topicCountBeforeDelete).toBe(1);
+    describe("POST /topics/:id/destroy", () =>{
+          it("should delete the topic with the associate ID", (done)=>{
+              Topic.all()
+              .then((topics) =>{
+                  const topicCountBeforeDelete = topics.length;
+                  expect(topicCountBeforeDelete).toBe(1);
+                  request.post(`${base}${this.topic.id}/destroy`, (err,res,body) =>{
+                      Topic.all()
+                      .then((topics) =>{
+                          expect(err).toBeNull();
+                          expect(topics.length).toBe(topicCountBeforeDelete - 1);
+                          done();
+                      })
+                  });
+              });
 
-          request.post(`${base}${this.topic.id}/destroy`, (err, res, body)=> {
-            Topic.all()
-            .then((topics)=>{
-              expect(err).toBeNull();
-              expect(topics.length).toBe(topicCountBeforeDelete - 1);
-              done();
-            })
-          });
         });
-      });
     });
 
     describe("GET /topics/:id/edit", ()=>{
@@ -168,30 +168,29 @@ describe("routes : topics", () =>{
     });
 
     describe("POST /topics/:id/update", () => {
-      it("should update the topic with the given values", (done) => {
-        const options = {
-          url: `${base}${this.topic.id}/update`,
-            form: {
-              title: "JavaScript Frameworks",
-              description: "There are a lot of them", 
-              userId: this.user.id,
-            }
-        };
 
-        request.post(options, (err, res, body) => {
-          expect(err).toBeNull();
-
-          Topic.findOne({
-            where: { id: this.topic.id }
-          })
-          .then((topic) => {
-            expect(topic.title).toBe("JavaScript Frameworks");
-            done();
-          });
+        it("should update the topic with the given values", (done) => {
+           const options = {
+              url: `${base}${this.topic.id}/update`,
+              form: {
+                title: "JavaScript Frameworks",
+                description: "There are a lot of them",
+              }
+            };
+            request.post(options,
+              (err, res, body) => {
+   
+              expect(err).toBeNull();
+              Topic.findOne({
+                where: { id: this.topic.id }
+              })
+              .then((topic) => {
+                expect(topic.title).toBe("JavaScript Frameworks");
+                done();
+              })
+            });
         });
       });
-    });
-
   });
 
   describe("member user performing CRUD actions for Topic", ()=>{

@@ -15,6 +15,7 @@ module.exports = class TopicPolicy extends ApplicationPolicy {
   }
 
   update() {
+    console.log(this.user);
     return this.edit();
   }
 

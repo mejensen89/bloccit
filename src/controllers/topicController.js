@@ -57,10 +57,10 @@ module.exports = {
     },
     
     destroy(req, res, next){
-        topicQueries.deleteTopic(req.params.id, (err,topic) =>{
-            if(err){
-                res.redirect(err, `/topics/${topic.id}`)
-            }else{
+        topicQueries.deleteTopic(req, (error, topic) => {
+            if(error){
+                res.redirect(error, `/topics/${req.params.id}`)
+            } else {
                 res.redirect(303, "/topics")
             }
         });
@@ -93,5 +93,5 @@ module.exports = {
             });
         }
             
-    };
+    }; 
     

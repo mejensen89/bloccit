@@ -48,27 +48,27 @@ module.exports ={
 
   deleteTopic(req, callback){
 
-   return Topic.findById(req.params.id)
-   .then((topic) => {
+        return Topic.findById(req.params.id)
+        .then((topic) => {
 
-   const authorized = new Authorizer(req.user, topic).destroy();
+            const authorized = new Authorizer(req.user, topic).destroy();
 
-   if(authorized) {
-       topic.destroy()
-       .then((res) => {
-         callback(null, topic);
-       });       
-     } else {
-       req.flash("notice", "You are not authorized to do that.")
-       callback(401);
-     }
-   })
-   .catch((err) => {
-     callback(err);
-   });
- },
+            if(authorized){
+                topic.destroy()
+                .then((res) => {
+                    callback(null, topic);
+                });
+            } else {
+                req.flash("notice", "You are not authorized to do that.")
+                callback(401);
+            } 
+        })
+        .catch((err) => {
+            callback(err);
+        });
+  },
  
- updateTopic(id, updatedTopic, callback) {
+ updateTopic(req, updatedTopic, callback) {
     return Topic.findById(req.params.id)
     .then((topic)=>{
       if(!topic){
